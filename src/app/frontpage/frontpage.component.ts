@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FrontpageService } from './frontpageservice.service';
 
 @Component({
   selector: 'app-frontpage',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FrontpageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+     private frontpageService:FrontpageService
+    ) { }
 
   ngOnInit(): void {
+     
+  }
+
+  saveProduct(){
+    this.frontpageService.saveProduct({id:Math.random(),name:"aaa"}).subscribe( x=> {
+      console.log(x)
+     })
   }
 
 }
