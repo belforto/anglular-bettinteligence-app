@@ -10,17 +10,25 @@
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.<br />
           </p>
-          <button  class="btn btn-light btn-lg action-button" type="button">
+          <button class="btn btn-light btn-lg action-button" type="button">
             Learn More<i class="fa fa-long-arrow-right ml-2"></i>
           </button>
 
           <button
-          class="btn btn-light btn-lg action-button"
-        
-          *ngFor="let product of allProducts$ | async"
-        >aaa {{product.name}}</button>
+            (click)="onClickDispatchLogout()"
+            class="btn btn-light btn-lg action-button"
+            *ngFor="let product of allProducts$ | async"
+          >
+            aaa {{ product.name }}
+          </button>
 
-        
+          <hr />
+          <!-- <a
+            *ngFor="let product of allProducts$ | async"
+            routerLink="/product/{{ product.id }}"
+          >
+            {{ product.name }}
+          </a> -->
         </div>
         <div
           class="col-md-5 col-lg-5 offset-lg-1 offset-xl-0 d-none d-lg-block phone-holder"
