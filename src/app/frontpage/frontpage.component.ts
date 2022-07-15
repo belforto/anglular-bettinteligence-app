@@ -28,10 +28,13 @@ export class FrontpageComponent implements OnInit {
   
   }
 
-  // saveProduct(){
-  //   this.frontpageService.saveProduct({id:Math.random(),name:"aaa"}).subscribe( x=> {
-  //     console.log(x)
-  //    })
-  // }
+  saveProduct(){
+    console.log('saveProduct: ')
+    // this.frontpageService.saveProduct({id:Math.random(),name:"aaa"}).subscribe( x=> {
+    //   console.log(x)
+    //  })
+    const prod={product:{name:"novi prod",id:4567}}
+    this.store.dispatch(FP.API_SAVE_FRONTPAGE_SUCCESS(prod));
+  }
 
 }

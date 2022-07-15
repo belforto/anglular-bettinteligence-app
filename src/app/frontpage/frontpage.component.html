@@ -15,6 +15,7 @@
           </button>
 
           <button
+          (click)="saveProduct()"
           class="btn btn-light btn-lg action-button"
         
           *ngFor="let product of allProducts$ | async"

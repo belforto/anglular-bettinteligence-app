@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as FP from './frontpage.action';
-import {  FrontpageService } from '../../frontpage/frontpageservice.service';
+import { FrontpageService } from '../../frontpage/frontpageservice.service';
 import { of, from } from 'rxjs';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -26,14 +26,16 @@ export class FrontpageEffects {
         from(this.frontpageService.getProducts()).pipe(
           // Take the returned value and return a new success action containing the todos
           map((productsFirebaseObj) => {
-              const productsArray =[]
-              for (const key in productsFirebaseObj) {
-                if (Object.prototype.hasOwnProperty.call(productsFirebaseObj, key)) {
-                  const element = productsFirebaseObj[key];
-                  productsArray.push({...element})
-                }
+            const productsArray = [];
+            for (const key in productsFirebaseObj) {
+              if (
+                Object.prototype.hasOwnProperty.call(productsFirebaseObj, key)
+              ) {
+                const element = productsFirebaseObj[key];
+                productsArray.push({ ...element });
               }
-              return productsArray;
+            }
+            return productsArray;
           }),
           map((products) => FP.LOAD_FRONTPAGE_SUCCESS({ products: products })),
           // Or... if it errors return a new failure action containing the error
@@ -44,15 +46,26 @@ export class FrontpageEffects {
   );
 
   // Run this code when the addTodo or removeTodo action is dispatched
-//   saveTodos$ = createEffect(
-//     () =>
-//       this.actions$.pipe(
-//         ofType(FP.ADD_FRONTPAGE),
-//         withLatestFrom(this.store.select(selectAllFrontpage)),
-//         switchMap(([action, todos]) => from(this.frontpageService.saveProduct(todos)))
-//       ),
-//     // Most effects dispatch another action, but this one is just a "fire and forget" effect
-//     { dispatch: false }
-//   );
-
+  saveProduct$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(FP.API_SAVE_FRONTPAGE_SUCCESS),
+        // withLatestFrom(this.store.select(selectAllFrontpage)),
+        switchMap((action) => {
+          return this.frontpageService.saveProduct(action.product).pipe(
+            map((packageCluster: any) => ofType(FP.LOAD_FRONTPAGE))
+            // catchError((err: Error) =>
+            // ofType(FP.API_SAVE_FRONTPAGE_SUCCESS)
+            // ),
+          );
+        }),
+        // if you want to trigger another action after first one
+        switchMap((res) => [
+          // new Notification('save success'),
+          FP.LOAD_FRONTPAGE(),
+        ])
+      )
+    // Most effects dispatch another action, but this one is just a "fire and forget" effect
+    // { dispatch: false }
+  );
 }
