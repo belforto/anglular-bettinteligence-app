@@ -26,9 +26,3 @@ export const REMOVE_FRONTPAGE = createAction(
     '[Frontpage API] Frontpage Load Failed',
     props<{ error: string }>()
   );
-
-
-  export const LOGOUT_CLICKED =createAction(
-    "[LOGOUT_CLICKED] LOGOUT_CLICKED"
-   
-)

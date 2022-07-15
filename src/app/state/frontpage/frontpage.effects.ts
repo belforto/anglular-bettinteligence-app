@@ -2,21 +2,19 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as FP from './frontpage.action';
 import {  FrontpageService } from '../../frontpage/frontpageservice.service';
-import { of, from,tap } from 'rxjs';
+import { of, from } from 'rxjs';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../app.state';
 import { selectAllFrontpage } from './frontpage.selector';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class FrontpageEffects {
   constructor(
     private actions$: Actions,
     private store: Store<AppState>,
-    private frontpageService: FrontpageService,
-    private router: Router,
+    private frontpageService: FrontpageService
   ) {}
 
   // Run this code when a loadTodos action is dispatched
@@ -56,18 +54,5 @@ export class FrontpageEffects {
 //     // Most effects dispatch another action, but this one is just a "fire and forget" effect
 //     { dispatch: false }
 //   );
-
-logOut = createEffect(
-  () => {
-    return this.actions$.pipe(
-      ofType(FP.LOGOUT_CLICKED),
-      tap(x => {
-        this.router.navigate(['/']);
-        console.log("Logout action ",x)
-      })
-    )
-  },
-  { dispatch: false },
-)
 
 }

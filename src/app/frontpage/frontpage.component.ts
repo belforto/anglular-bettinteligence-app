@@ -28,10 +28,6 @@ export class FrontpageComponent implements OnInit {
   
   }
 
-  onClickDispatchLogout(){
-    this.store.dispatch(FP.LOGOUT_CLICKED());
-  }
-
   // saveProduct(){
   //   this.frontpageService.saveProduct({id:Math.random(),name:"aaa"}).subscribe( x=> {
   //     console.log(x)
